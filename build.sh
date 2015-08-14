@@ -1,11 +1,13 @@
 #!/bin/bash
 
 build() {
-  RUBY_VERSION=$2 erb Dockerfile.erb > Dockerfile
-  tar -czh . | docker build -t instedd/nginx-rails-$1 -
-  rm Dockerfile
+  rm -rf ruby-$1
+  mkdir ruby-$1
+  cp -r files ruby-$1/files
+  RUBY_VERSION=$1 erb Dockerfile.erb > ruby-$1/Dockerfile
 }
 
 
-build 20 2.0.0-p598
-build 21 2.1.5
+build 2.0
+build 2.1
+build 2.2
