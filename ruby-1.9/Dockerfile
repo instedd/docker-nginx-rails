@@ -1,4 +1,4 @@
-FROM <%= ENV['FROM_IMAGE'] %>
+FROM instedd/ruby:1.9
 
 # Install prerequisites
 RUN \
