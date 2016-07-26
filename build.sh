@@ -11,3 +11,4 @@ build 1.9 instedd/ruby:1.9
 build 2.0 ruby:2.0
 build 2.1 ruby:2.1
 build 2.2 ruby:2.2
+build 2.3 ruby:2.3
