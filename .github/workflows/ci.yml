@@ -6,27 +6,14 @@ jobs:
   build:
     runs-on: ubuntu-20.04
     steps:
-      - uses: actions/checkout@v2
-      - name: Generate images' Dockerfiles
-        run: ./dockerfiles.sh
-      - name: Build Docker images
-        run: ./build.sh
+      - name: Test contents of github.ref
+        run: echo "github.ref is $THE_GITHUB_REF <---"
         env:
-          DOCKER_REPOSITORY: 'instedd/nginx-rails'
-          CURRENT_COMMIT: ${{ github.sha }}
-      - name: Log into Docker
-        run: docker login --username="${DOCKER_USER}" --password-stdin "${DOCKER_REGISTRY}" <<< "${DOCKER_PASS}"
-        env:
-          DOCKER_USER: ${{ secrets.DOCKER_USER }}
-          DOCKER_PASS: ${{ secrets.DOCKER_PASS }}
-      - name: Push commit-specific Docker images
-        run: ./push.sh
-        env:
-          DOCKER_REPOSITORY: 'instedd/nginx-rails'
-          CURRENT_COMMIT: ${{ github.sha }}
-      - name: Push stable Docker images
-        run: ./push.sh --stable
-        if: ${{ github.ref == 'refs/head/master' }}
-        env:
-          DOCKER_REPOSITORY: 'instedd/nginx-rails'
-          CURRENT_COMMIT: ${{ github.sha }}
+          THE_GITHUB_REF: ${{ github.ref }}
+      - name: Check if we got it right
+        run: echo "Yes it works"
+        if: ${{ github.ref == 'refs/head/test/github-actions' }}
+      - name: Check alternative
+        run: echo "It was the short one"
+        if: ${{ github.ref == 'test/github-actions' }}
+      
