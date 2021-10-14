@@ -6,7 +6,7 @@ SHORT_COMMIT=${CURRENT_COMMIT::7}
 build-image() {
   cd ruby-$1
   docker build -t ${DOCKER_REPOSITORY}:${1}-${SHORT_COMMIT} .
-  docker tag ${DOCKER_REPOSITORY}:${1}-${SHORT_COMMIT} ${DOCKER_REPOSITORY}:${1}-${SHORT_COMMIT}
+  docker tag ${DOCKER_REPOSITORY}:${1}-${SHORT_COMMIT} ${DOCKER_REPOSITORY}:${1}
   cd -
 }
 
