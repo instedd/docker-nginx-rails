@@ -26,7 +26,7 @@ jobs:
           CURRENT_COMMIT: ${{ github.sha }}
       - name: Push stable Docker images
         run: ./push.sh --stable
-        if: ${{ github.ref == 'refs/head/master' }}
+        if: ${{ github.ref == 'refs/heads/master' }}
         env:
           DOCKER_REPOSITORY: 'instedd/nginx-rails'
           CURRENT_COMMIT: ${{ github.sha }}
