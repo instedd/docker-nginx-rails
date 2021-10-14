@@ -1,14 +1,17 @@
 #!/bin/bash
+set -eo pipefail
 
-build() {
-  rm -rf ruby-$1
-  mkdir ruby-$1
-  cp -r files ruby-$1/files
-  FROM_IMAGE=$2 erb Dockerfile.erb > ruby-$1/Dockerfile
+SHORT_COMMIT=${CURRENT_COMMIT::7}
+
+build-image() {
+  cd ruby-$1
+  docker build -t ${DOCKER_REPOSITORY}:${1}-${SHORT_COMMIT} .
+  docker tag ${DOCKER_REPOSITORY}:${1}-${SHORT_COMMIT} ${DOCKER_REPOSITORY}:${1}-${SHORT_COMMIT}
+  cd -
 }
 
-build 1.9 instedd/ruby:1.9
-build 2.0 ruby:2.0
-build 2.1 ruby:2.1
-build 2.2 ruby:2.2
-build 2.3 ruby:2.3
+build-image 1.9
+build-image 2.0
+build-image 2.1
+build-image 2.2
+build-image 2.3

@@ -1,5 +1,11 @@
 FROM <%= ENV['FROM_IMAGE'] %>
 
+# Cleanup expired Let's Encrypt CA (Sept 30, 2021)
+RUN sed -i '/^mozilla\/DST_Root_CA_X3/s/^/!/' /etc/ca-certificates.conf && update-ca-certificates -f
+
+<% rubygems_version = ENV['RUBYGEMS_VERSION'] %>
+<%= "RUN gem update --system #{rubygems_version}" unless rubygems_version.empty? %>
+
 # Install prerequisites
 RUN \
   apt-get update && \
