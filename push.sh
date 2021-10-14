@@ -1,11 +1,12 @@
 #!/bin/bash
 set -eo pipefail
 
+STABLE_PUSH=${1}
 SHORT_COMMIT=${CURRENT_COMMIT::7}
 
 push-image() {
   docker push ${DOCKER_REPOSITORY}:${1}-${SHORT_COMMIT}
-  if [ "--stable" = "${2}" ]
+  if [ "--stable" = "${STABLE_PUSH}" ]
   then
     docker push ${DOCKER_REPOSITORY}:${1}
   fi
