@@ -1,3 +1,8 @@
 #!/bin/sh
 
+if [ -n "$NGINX_RAILS__client_max_body_size" ]
+then
+  echo "client_max_body_size $NGINX_RAILS__client_max_body_size;" >> /etc/nginx/conf.d/nginx_rails_runtime.conf
+fi
+
 /usr/sbin/nginx -g 'daemon off;'
